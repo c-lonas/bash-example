@@ -55,26 +55,37 @@ first_function() {
 }
 
 second_function() {
-	sleep 3
+	echo "Executing second function..."
+	system_info=$(uname -a)
+	echo "System Info: ${system_info}"
 }
 
 main() {
-
 	log "Bash example script started"
 	if [[ ${A_SWITCH} == true ]]; then
 		log "A_SWITCH is true, executing first function"
-		echo -n "Executing first function..."; first_function && \
-		echo "Done!"; exit 0;
+		echo -n "Executing first function..."; 
+		if first_function; then
+			echo "Done!"; log "First function executed successfully"
+		else
+			echo "Failed!"; log "First function failed"
+		fi
+		exit 0
 	fi
 
-
 	if [[ ${B_SWITCH} == true ]]; then
-		log "B_SWITCH is true, executing second function..."
-        echo -n "Executing second function..."; second_function && \
-		echo "Done!"; exit 0;
+		log "B_SWITCH is true, executing second function"
+		echo -n "Executing second function..."; 
+		if second_function; then
+			echo "Done!"; log "Second function executed successfully"
+		else
+			echo "Failed!"; log "Second function failed"
+		fi
+		exit 0
 	fi
 
 	echo "Sample Script Finished"
+	log "Sample script finished"
 }
 
 main
